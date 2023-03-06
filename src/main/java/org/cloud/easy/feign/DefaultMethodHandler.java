@@ -11,10 +11,15 @@ public class DefaultMethodHandler implements MethodHandler {
 
     private String methodPath;
 
-
+    private RpcClientRequest rpcClientRequest;
 
     @Override
     public Object invoke(Object[] var1) throws Throwable {
+
+        // 执行方法
+
+
+
         return null;
     }
 
@@ -40,5 +45,13 @@ public class DefaultMethodHandler implements MethodHandler {
 
     public void setMethodPath(String methodPath) {
         this.methodPath = methodPath;
+    }
+
+    public RpcClientRequest getRpcClientRequest() {
+        return rpcClientRequest;
+    }
+
+    public void setRpcClientRequest(RpcClientRequest rpcClientRequest) {
+        this.rpcClientRequest = rpcClientRequest;
     }
 }

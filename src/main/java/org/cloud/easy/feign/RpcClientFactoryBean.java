@@ -4,7 +4,9 @@ package org.cloud.easy.feign;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
 
 public class RpcClientFactoryBean implements FactoryBean {
 
@@ -26,14 +28,11 @@ public class RpcClientFactoryBean implements FactoryBean {
     public Object getObject() throws Exception {
 
         MethodAnnotationHandle handle = new MethodAnnotationHandle(type, beanFactory, url);
-        handle.handleMethod();
-
-
+        HashMap<Method, MethodHandler> handleMethod = handle.handleMethod();
         // 创建代理对象
-        Rpc.RpcInvocationHandler rpcInvocationHandler = new Rpc.RpcInvocationHandler(null);
+        Rpc.RpcInvocationHandler rpcInvocationHandler = new Rpc.RpcInvocationHandler(handleMethod);
         Class<?>[] interfaces = {type};
         Object proxyInstance = Proxy.newProxyInstance(RpcClientFactoryBean.class.getClassLoader(), interfaces, rpcInvocationHandler);
-
         return proxyInstance;
     }
 
