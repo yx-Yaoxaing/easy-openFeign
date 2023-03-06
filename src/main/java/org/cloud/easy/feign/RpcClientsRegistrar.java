@@ -89,10 +89,11 @@ public class RpcClientsRegistrar implements ImportBeanDefinitionRegistrar , Reso
         return new ClassPathScanningCandidateComponentProvider(false, this.environment) {
             protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
                 boolean isCandidate = false;
-                if (beanDefinition.getMetadata().isIndependent() && !beanDefinition.getMetadata().isAnnotation()) {
-                    isCandidate = true;
-                }
 
+                Map<String, Object> map = beanDefinition.getMetadata().getAnnotationAttributes(RpcClients.class.getName());
+                if (map != null) {
+                    return true;
+                }
                 return isCandidate;
             }
         };
